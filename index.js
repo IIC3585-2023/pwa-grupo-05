@@ -2,17 +2,17 @@ import { getTweets, setTweet } from "./tweets-api.js";
 
 
 window.addEventListener('load', async () => {
+  await getTweets();
   if ('serviceWorker' in navigator) {
     try {
       navigator.serviceWorker.register('serviceWorker.js');
-
+      
       console.log('SW registered');
     }
     catch (error) {
       console.log('SW failed');
     }
   }
-  await getTweets();
 });
 
 document.getElementById('new-tweet-button').addEventListener('click', async(event) => {
