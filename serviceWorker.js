@@ -2,7 +2,14 @@ const staticAssets = [
   './',
   './index.js',
   './tweets-api.js',
+  './images/icons/icon-192x192.png',
+  './images/icons/icon-256x256.png',
+  './images/icons/icon-384x384.png',
+  './images/icons/icon-512x512.png',
+  'https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css',
 ];
+
+const tweets_url = 'https://6459a3698badff578e117409.mockapi.io/tweets';
 
 self.addEventListener('install', async () => {
   const cache = await caches.open('twitter-static');
@@ -10,7 +17,7 @@ self.addEventListener('install', async () => {
 });
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
+  if (event.request.method !== 'GET' || event.request.url !== tweets_url) return;
   event.respondWith(networkFirst(event.request));
 });
 
