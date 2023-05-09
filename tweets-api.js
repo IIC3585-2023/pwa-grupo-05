@@ -1,13 +1,11 @@
-import { db, getDocs, collection, setDoc, doc, Timestamp, } from './firebase-config.js'
-  
 
 const getTweets = async () => {
 
-  const querySnapshot = await getDocs(collection(db, "tweets"));
+  const response = await fetch('https://6459a3698badff578e117409.mockapi.io/tweets');
+  const tweets = await response.json();
   const mainContainer = document.getElementById('tweets-container');
-  querySnapshot.forEach((doc) => {
-    const { body, user, date } = doc.data();
-    const tweet_date = new Date(date.seconds * 1000).toLocaleString();
+  tweets.reverse().forEach(({user, body, date}) => {
+    const tweet_date = new Date(date * 1000).toLocaleString();
     mainContainer.innerHTML += `
       <div class="tweet">
         <div class="tweet-header">
@@ -23,11 +21,16 @@ const getTweets = async () => {
 };
 
 const setTweet = async (user, body) => {
-  const tweetsRef = collection(db, "tweets");
-  await setDoc(doc(tweetsRef), {
-    user,
-    body,
-    date: Timestamp.fromDate(new Date()),
+  await fetch('https://6459a3698badff578e117409.mockapi.io/tweets', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      user,
+      body,
+      date: Date.now() / 1000,
+    })
   });
 }
 

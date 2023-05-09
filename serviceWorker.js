@@ -2,7 +2,6 @@ const staticAssets = [
   './',
   './index.js',
   './tweets-api.js',
-  './firebase-config.js',
 ];
 
 self.addEventListener('install', async () => {
@@ -10,25 +9,30 @@ self.addEventListener('install', async () => {
   cache.addAll(staticAssets);
 });
 
-
-
-const wena = async (event) => {
-  console.log(event.request.url)
+self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  event.respondWith(networkFirst(event.request));
+});
+
+const networkFirst = async (request) => {
   const cache = await caches.open('twitter-dynamic');
   try {
-    const { request } = event;
     const response = await fetch(request);
-    const responseCloned = response.clone();
-    await cache.put(request, responseCloned);
-    return responseCloned;
+    cache.put(request, response.clone());
+    return response;
+  } catch (error) {
+    return await cache.match(request);
   }
-  catch (error) {
-    console.log(error)
-    const cachedResponse = await cache.match(event.request);
-    // event.respondWith(cachedResponse);
-    return cachedResponse;
-  }
-}
+};
 
-self.addEventListener('fetch', wena);
+
+// const cacheData = async (request) => {
+//   const cache = await caches.open('twitter-dynamic');
+//   const cachedResponse = await cache.match(request);
+//   if (cachedResponse) return cachedResponse;
+//   return new Response('Not found', {
+//     status: 404,
+//     statusText: 'Not found',
+//   });
+// }
+
