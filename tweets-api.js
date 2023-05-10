@@ -1,7 +1,7 @@
 
 const getTweets = async () => {
 
-  const response = await fetch('https://6459a3698badff578e117409.mockapi.io/tweets');
+  const response = await fetch('https://backend-dhzf.onrender.com/tweets');
   const tweets = await response.json();
   const mainContainer = document.getElementById('tweets-container');
   tweets.reverse().forEach(({user, body, date}) => {
@@ -21,7 +21,8 @@ const getTweets = async () => {
 };
 
 const setTweet = async (user, body) => {
-  await fetch('https://6459a3698badff578e117409.mockapi.io/tweets', {
+  console.log(user, body);
+  await fetch('https://backend-dhzf.onrender.com/tweets', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -29,7 +30,6 @@ const setTweet = async (user, body) => {
     body: JSON.stringify({
       user,
       body,
-      date: Date.now() / 1000,
     })
   });
 }
