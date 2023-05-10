@@ -12,17 +12,17 @@ const staticAssets = [
 const tweets_url = 'https://6459a3698badff578e117409.mockapi.io/tweets';
 
 self.addEventListener('install', async () => {
-  const cache = await caches.open('twitter-static');
+  const cache = await caches.open('twitter-cache');
   cache.addAll(staticAssets);
 });
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET' || event.request.url !== tweets_url) return;
+  if (event.request.method !== 'GET') return;
   event.respondWith(networkFirst(event.request));
 });
 
 const networkFirst = async (request) => {
-  const cache = await caches.open('twitter-dynamic');
+  const cache = await caches.open('twitter-cache');
   try {
     const response = await fetch(request);
     cache.put(request, response.clone());
@@ -31,15 +31,3 @@ const networkFirst = async (request) => {
     return await cache.match(request);
   }
 };
-
-
-// const cacheData = async (request) => {
-//   const cache = await caches.open('twitter-dynamic');
-//   const cachedResponse = await cache.match(request);
-//   if (cachedResponse) return cachedResponse;
-//   return new Response('Not found', {
-//     status: 404,
-//     statusText: 'Not found',
-//   });
-// }
-
