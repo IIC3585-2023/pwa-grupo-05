@@ -16,6 +16,7 @@ window.addEventListener('load', async () => {
 });
 
 document.getElementById('new-tweet-button').addEventListener('click', async(event) => {
+  console.log('test')
   event.preventDefault();
   const user = document.getElementById('new-tweet-user').value;
   const body = document.getElementById('new-tweet-body').value;
