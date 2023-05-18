@@ -18,15 +18,25 @@ const messaging = getMessaging(app);
 const listen = async () => {
   try {
     const serviceWorkerRegistration = await navigator.serviceWorker.register('./firebase/firebase-messaging-sw.js');
-    console.log("register: ", serviceWorkerRegistration)
-    const token = await getToken(messaging, {
-      vapidKey: "BH_HP_crMNHblGKqgHcpWtpu3M76vv71jFBrHTmInrQShsUmIyGJU29lpzND50Z5XeiruZxNvXbC4Q5YC71b5dY",
-      serviceWorkerRegistration,
-    });
-    console.log(token);
+    console.log("register: ", serviceWorkerRegistration);
+    // Get token only if it does not exist in local storage
+    if (localStorage.getItem('token') === null) {
+      const token = await getToken(messaging, {
+        vapidKey: "BH_HP_crMNHblGKqgHcpWtpu3M76vv71jFBrHTmInrQShsUmIyGJU29lpzND50Z5XeiruZxNvXbC4Q5YC71b5dY",
+        serviceWorkerRegistration,
+      });
+      console.log(token);
+      localStorage.setItem('token', token);
+      await fetch('http://localhost:5001/subscribe', {
+        method: 'POST',
+        body: JSON.stringify({ token }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    }
     onMessage(messaging, (payload) => {
       console.log('Message received. ', payload);
-      // ...
     });
   } catch (e) {
     console.log('ERROR: ', e)
