@@ -17,11 +17,11 @@ const messaging = getMessaging(app);
 
 const listen = async () => {
   try {
-    const register = await navigator.serviceWorker.register('./firebase-messaging-sw.js');
-    console.log("register: ", register)
+    const serviceWorkerRegistration = await navigator.serviceWorker.register('firebase-messaging-sw.js');
+    console.log("register: ", serviceWorkerRegistration)
     const token = await getToken(messaging, {
       vapidKey: "BH_HP_crMNHblGKqgHcpWtpu3M76vv71jFBrHTmInrQShsUmIyGJU29lpzND50Z5XeiruZxNvXbC4Q5YC71b5dY",
-      serviceWorkerRegistration: register
+      serviceWorkerRegistration,
     });
     console.log(token);
     onMessage(messaging, (payload) => {

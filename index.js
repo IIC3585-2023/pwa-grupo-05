@@ -5,7 +5,8 @@ window.addEventListener('load', async () => {
   await getTweets();
   if ('serviceWorker' in navigator) {
     try {
-      navigator.serviceWorker.register('serviceWorker.js');
+      await navigator.serviceWorker.register('serviceWorker.js');
+      await navigator.serviceWorker.register('./firebase-messaging-sw.js')
       console.log('SW registered');
     }
     catch (error) {
