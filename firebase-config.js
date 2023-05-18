@@ -35,8 +35,13 @@ const listen = async () => {
         },
       });
     }
-    onMessage(messaging, (payload) => {
+    onMessage(messaging, ({notification}) => {
       console.log('Message received. ', payload);
+      const {title, body, icon} = notification;
+      serviceWorkerRegistration.showNotification(title, {
+        body,
+        icon,
+      });
     });
   } catch (e) {
     console.log('ERROR: ', e)
