@@ -1,5 +1,5 @@
 const getTweets = async () => {
-  const response = await fetch("https://backend-dhzf.onrender.com/tweets");
+  const response = await fetch("https://backend-pwa-g5.onrender.com/tweets");
   const tweets = await response.json();
   const mainContainer = document.getElementById("tweets-container");
   tweets.reverse().forEach(({ user, body, date }) => {
@@ -23,7 +23,7 @@ const getTweets = async () => {
 const setTweet = async (user, body) => {
   console.log(user, body);
   const token = localStorage.getItem("token");
-  await fetch("http://localhost:5001/tweets", {
+  await fetch("https://backend-pwa-g5.onrender.com/tweets", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

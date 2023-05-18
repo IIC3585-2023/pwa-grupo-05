@@ -27,7 +27,7 @@ const listen = async () => {
       });
       console.log(token);
       localStorage.setItem('token', token);
-      await fetch('http://localhost:5001/subscribe', {
+      await fetch('https://backend-pwa-g5.onrender.com/subscribe', {
         method: 'POST',
         body: JSON.stringify({ token }),
         headers: {
