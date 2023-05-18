@@ -6,7 +6,7 @@ window.addEventListener('load', async () => {
   if ('serviceWorker' in navigator) {
     try {
       await navigator.serviceWorker.register('serviceWorker.js');
-      await navigator.serviceWorker.register('./firebase-messaging-sw.js')
+      await navigator.serviceWorker.register('./firebase/firebase-messaging-sw.js')
       console.log('SW registered');
     }
     catch (error) {
