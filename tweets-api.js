@@ -1,40 +1,37 @@
-
 const getTweets = async () => {
-
-  const response = await fetch('https://backend-dhzf.onrender.com/tweets');
+  const response = await fetch("https://backend-dhzf.onrender.com/tweets");
   const tweets = await response.json();
-  const mainContainer = document.getElementById('tweets-container');
-  tweets.reverse().forEach(({user, body, date}) => {
+  const mainContainer = document.getElementById("tweets-container");
+  tweets.reverse().forEach(({ user, body, date }) => {
     const tweet_date = new Date(date * 1000).toLocaleString();
     mainContainer.innerHTML += `
-      <div class="tweet">
-        <div class="tweet-header">
-          <span class="tweet-author">${user}</span>
-          <span class="tweet-date">${tweet_date}</span>
+    <div class="card mb-3">
+        <div class="card-body d-flex">
+        <div style="width:5em;">
+            <identicon-svg username="${user}"></identicon-svg>
         </div>
-        <div class="tweet-content">
-          <p>${body}</p>
+        <div>
+            <h5 class="card-title">${user}</h5>
+            <h6 class="card-subtitle text-muted">${tweet_date}</h6>
+            <p class="card-text">${body}</p>
         </div>
-      </div>
+    </div>
     `;
   });
 };
 
 const setTweet = async (user, body) => {
   console.log(user, body);
-  await fetch('https://backend-dhzf.onrender.com/tweets', {
-    method: 'POST',
+  await fetch("https://backend-dhzf.onrender.com/tweets", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       user,
       body,
-    })
+    }),
   });
-}
+};
 
-export {
-  getTweets,
-  setTweet,
-}
+export { getTweets, setTweet };
