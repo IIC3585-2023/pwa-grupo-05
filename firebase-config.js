@@ -36,7 +36,8 @@ const listen = async () => {
       });
     }
     onMessage(messaging, ({notification}) => {
-      console.log('Message received. ', payload);
+      // console.log('Message received. ', payload);
+      console.log('Message received. ', notification)
       const {title, body, icon} = notification;
       serviceWorkerRegistration.showNotification(title, {
         body,
