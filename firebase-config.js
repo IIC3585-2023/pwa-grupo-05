@@ -27,7 +27,7 @@ const listen = async () => {
       });
       console.log(token);
       localStorage.setItem('token', token);
-      await fetch('https://backend-dhzf.onrender.com/subscribe', {
+      await fetch('http://localhost:5001/subscribe', {
         method: 'POST',
         body: JSON.stringify({ token }),
         headers: {

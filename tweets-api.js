@@ -22,7 +22,8 @@ const getTweets = async () => {
 
 const setTweet = async (user, body) => {
   console.log(user, body);
-  await fetch("https://backend-dhzf.onrender.com/tweets", {
+  const token = localStorage.getItem("token");
+  await fetch("http://localhost:5001/tweets", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,6 +31,7 @@ const setTweet = async (user, body) => {
     body: JSON.stringify({
       user,
       body,
+      token,
     }),
   });
 };
