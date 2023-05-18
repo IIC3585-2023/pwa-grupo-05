@@ -24,7 +24,7 @@ const listen = async () => {
       // ...
     });
   } catch (e) {
-    console.log(e)
+    console.log('ERROR: ', e)
     console.log("Notificaciones no soportadas");
   }
     
