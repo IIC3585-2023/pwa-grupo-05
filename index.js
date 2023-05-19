@@ -15,6 +15,10 @@ window.addEventListener('load', async () => {
   }
 });
 
+window.addEventListener('focus', () => {
+  window.location.reload();
+});
+
 document.getElementById('new-tweet-button').addEventListener('click', async(event) => {
   console.log('test')
   event.preventDefault();
